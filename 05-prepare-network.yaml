@@ -1,0 +1,76 @@
+- name: Prepare OpenStackNetwork
+  hosts: localhost
+  tasks:
+    - name: Create Public/Provider Network
+      os_network:
+        state: present
+        project: admin
+        name: public
+        admin_state_up: yes
+        external: yes
+        #mtu_size: 8942
+        provider_network_type: flat
+        provider_physical_network: datacentre
+        #provider_segmentation_id: 0
+        #region_name: regionOne
+        #dns_domain: openstack.local
+        shared: no
+    - name: Create Public/Provider Subnet
+      os_subnet:
+        state: present
+        name: public-sub
+        network_name: public
+        ip_version: '4'
+        #project: admin
+        #region_name: regionOne
+        allocation_pool_start: 192.168.240.101
+        allocation_pool_end: 192.168.240.200
+        cidr: 192.168.240.0/24
+        gateway_ip: 192.168.240.240
+        dns_nameservers: 192.168.240.241
+
+
+    - name: Create Tenant Network
+      os_network:
+        state: present
+        #project: admin
+        name: admin-net
+        admin_state_up: yes
+        #external: yes
+        #mtu_size: 8942
+        #provider_network_type: flat
+        #provider_physical_network: datacentre
+        #provider_segmentation_id: 0
+        #region_name: regionOne
+        #dns_domain: openstack.local
+        shared: no
+    - name: Create Tenant Subnet
+      os_subnet:
+        state: present
+        name: admin-sub
+        network_name: admin-net
+        ip_version: '4'
+        #project: admin
+        #region_name: regionOne
+        allocation_pool_start: 10.0.0.10
+        allocation_pool_end: 10.0.0.100
+        cidr: 10.0.0.0/24
+        gateway_ip: 10.0.0.1
+        dns_nameservers: 192.168.240.241
+
+    - name: Create Tenant Router
+      os_router:
+        state: present
+        #project: admin
+        #region_name: regionOne
+        name: admin-router
+        admin_state_up: yes
+        network: public
+        external_fixed_ips: 
+          - subnet: public-sub
+            ip: 192.168.240.150
+        enable_snat: yes
+        interfaces: 
+          - net: admin-net
+            subnet: admin-sub
+            portip: 10.0.0.1

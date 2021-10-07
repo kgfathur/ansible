@@ -1,0 +1,26 @@
+---
+  - name: List Task Template
+    find:
+      paths: "{{ playbook_dir }}"
+      patterns: 08--*
+    register: task_files
+
+  - name: Setup Template for CREATE Action
+    replace:
+      path: "{{ item.path }}"
+      backup: no
+      regexp: "Delete"
+      replace: "Create"
+    with_items:
+      - "{{ task_files.files }}"
+    no_log: true
+
+  - name: Setup Template for CREATE Action
+    replace:
+      path: "{{ item.path }}"
+      backup: no
+      regexp: "absent"
+      replace: "present"
+    with_items:
+      - "{{ task_files.files }}"
+    no_log: true

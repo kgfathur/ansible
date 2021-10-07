@@ -1,0 +1,40 @@
+- name: Prepare OpenStack Network
+  hosts: localhost
+  vars_files:
+    - "vars/credentials.yaml"
+    - "vars/config-data.yaml"
+  vars:
+    deploytype: "CREATE"
+    task_lists:
+      - 08--provider-network.yaml
+      - 08--tenant-network.yaml
+      - 08--tenant-router.yaml
+  tasks:
+    - name: Prepare CREATE OpenStack Network
+      include_tasks: "08-prepare-create.yaml"
+      when: deploytype=="CREATE"
+
+    - name: Create OpenStack Network
+      vars:
+        task_name: "{{ main_item }}"
+      include_tasks: "{{ task_name }}"
+      with_items:
+        - "{{ task_lists }}"
+      loop_control:
+        loop_var: main_item
+      when: deploytype=="CREATE"
+
+    - name: Prepare DELETE  OpenStack Network
+      include_tasks: "08-prepare-delete.yaml"
+      when: deploytype=="DELETE"
+
+    - name: Delete OpenStack Network
+      vars:
+        task_name: "{{ main_item }}"
+      include_tasks: "{{ task_name }}"
+      with_items:
+        - "{{ task_lists[::-1] }}"
+      loop_control:
+        loop_var: main_item
+      when: deploytype=="DELETE"
+

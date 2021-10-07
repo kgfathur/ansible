@@ -1,0 +1,11 @@
+- name: Create Image Builder Instance
+  hosts: localhost
+  vars_files:
+      - "vars/credentials.yaml"
+  tasks:
+    - name: Shutdown Builder Instance
+      os_server_action:
+        auth: "{{ credentials }}"
+        action: stop
+        server: rhel-8.2-builder
+        timeout: 200

@@ -1,0 +1,14 @@
+- name: Prepare OpenStack Network
+  hosts: localhost
+  vars_files:
+    - "vars/credentials.yaml"
+    - "vars/config-data.yaml"
+  tasks:
+    - name: Create Public/Provider Network
+      include_tasks: "07--provider-network.yaml"
+
+    - name: Create Tenant Network
+      include_tasks: "07--tenant-network.yaml"
+
+    - name: Create Tenant Router
+      include_tasks: "07--tenant-router.yaml"

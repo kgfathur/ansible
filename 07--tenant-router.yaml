@@ -1,0 +1,14 @@
+---
+  - name: Create Tenant Router
+    os_router:
+      state: present
+      #project: admin
+      #region_name: regionOne
+      name: "{{ item.name }}"
+      admin_state_up: yes
+      network: "{{ item.network }}"
+      external_fixed_ips: "{{ item.external_fixed_ips }}"
+      enable_snat: yes
+      interfaces: "{{ item.interfaces }}"
+    with_items:
+      - "{{ router_info }}"

@@ -1,0 +1,33 @@
+---
+  - name: Create Tenant Network
+    os_network:
+      state: present
+      #project: admin
+      name: "{{ item.name }}"
+      admin_state_up: yes
+      #external: yes
+      #mtu_size: 8942
+      #provider_network_type: flat
+      #provider_physical_network: datacentre
+      #provider_segmentation_id: 0
+      #region_name: regionOne
+      #dns_domain: openstack.local
+      shared: no
+    with_items:
+      - "{{ int_net }}"
+
+  - name: Create Tenant Subnet
+    os_subnet:
+      state: present
+      name: "{{ item.name }}"
+      network_name: "{{ item.network_name }}"
+      ip_version: '4'
+      #project: admin
+      #region_name: regionOne
+      cidr: "{{ item.cidr }}"
+      gateway_ip: "{{ item.gateway_ip }}"
+      dns_nameservers: "{{ item.dns_nameservers }}"
+      allocation_pool_start: "{{ item.allocation_pool_start }}"
+      allocation_pool_end: "{{ item.allocation_pool_end }}"
+    with_items:
+      - "{{ int_sub }}"

@@ -1,0 +1,26 @@
+---
+  - name: List Task Template
+    find:
+      paths: "{{ playbook_dir }}"
+      patterns: 08--*.yaml
+    register: task_files
+
+  - name: Setup Template for DELETE Action
+    replace:
+      path: "{{ item.path }}"
+      backup: no
+      regexp: "Create"
+      replace: "Delete"
+    with_items:
+      - "{{ task_files.files }}"
+    no_log: true
+
+  - name: Setup Template for DELETE Action
+    replace:
+      path: "{{ item.path }}"
+      backup: no
+      regexp: "present"
+      replace: "absent"
+    with_items:
+      - "{{ task_files.files }}"
+    no_log: true
