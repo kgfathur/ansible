@@ -32,8 +32,8 @@
         cidr: "{{ item.cidr }}"
         gateway_ip: "{{ item.gateway_ip }}"
         dns_nameservers: "{{ item.dns_nameservers }}"
-        allocation_pool_start: "{{ item.allocation_pool_start }}"
-        allocation_pool_end: "{{ item.allocation_pool_end }}"
+        allocation_pool_start: "{{ item.allocation_pool_start | default(omit) }}"
+        allocation_pool_end: "{{ item.allocation_pool_end | default(omit) }}"
       with_items:
         - "{{ ext_sub }}"
 
@@ -65,8 +65,8 @@
         cidr: "{{ item.cidr }}"
         gateway_ip: "{{ item.gateway_ip }}"
         dns_nameservers: "{{ item.dns_nameservers }}"
-        allocation_pool_start: "{{ item.allocation_pool_start }}"
-        allocation_pool_end: "{{ item.allocation_pool_end }}"
+        allocation_pool_start: "{{ item.allocation_pool_start | default(omit) }}"
+        allocation_pool_end: "{{ item.allocation_pool_end | default(omit) }}"
       with_items:
         - "{{ int_sub }}"
 

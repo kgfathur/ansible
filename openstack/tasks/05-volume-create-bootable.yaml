@@ -1,0 +1,14 @@
+---
+  - name: Create bootable ISO volume
+    os_volume:
+      auth: "{{ credentials | default(omit) }}"
+      state: present
+      display_name: rhel-8.2-iso-bootable
+      volume_type: premium
+      size: 8
+      #bootable: yes
+      image: rhel-8.2-iso
+      #image: 932f1e37-9fc3-468d-a153-42efaaaa8afc
+      availability_zone: nova
+      display_description: Bootable ISO Volume
+      #wait: yes

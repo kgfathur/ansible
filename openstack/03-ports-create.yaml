@@ -1,0 +1,7 @@
+- name: Create Ports
+  hosts: localhost
+  vars_files:
+      - "vars/credentials.yaml"
+  tasks:
+    - name: Create a new port
+      include_tasks: "tasks/03-port-create.yaml"

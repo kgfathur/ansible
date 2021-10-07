@@ -6,12 +6,12 @@
   vars:
     deploytype: "CREATE"
     task_lists:
-      - 08--provider-network.yaml
-      - 08--tenant-network.yaml
-      - 08--tenant-router.yaml
+      - "tasks/02-02-provider-network.yaml"
+      - "tasks/02-03-tenant-network.yaml"
+      - "tasks/02-04-tenant-router.yaml"
   tasks:
     - name: Prepare CREATE OpenStack Network
-      include_tasks: "08-prepare-create.yaml"
+      include_tasks: "tasks/02-00-prepare-create.yaml"
       when: deploytype=="CREATE"
 
     - name: Create OpenStack Network
@@ -25,7 +25,7 @@
       when: deploytype=="CREATE"
 
     - name: Prepare DELETE  OpenStack Network
-      include_tasks: "08-prepare-delete.yaml"
+      include_tasks: "tasks/02-01-prepare-delete.yaml"
       when: deploytype=="DELETE"
 
     - name: Delete OpenStack Network

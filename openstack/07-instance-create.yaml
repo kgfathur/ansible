@@ -1,0 +1,7 @@
+- name: Create Instance
+  hosts: localhost
+  vars_files:
+      - "vars/credentials.yaml"
+  tasks:
+    - name: Create a new instance 
+      include_tasks: "tasks/07-instance-create.yaml"

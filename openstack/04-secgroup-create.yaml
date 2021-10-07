@@ -1,0 +1,7 @@
+- name: Create Security Group
+  hosts: localhost
+  vars_files:
+      - "vars/credentials.yaml"
+  tasks:
+    - name: Create Security Group
+      include_tasks: "tasks/04-secgroup-create.yaml"

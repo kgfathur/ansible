@@ -1,0 +1,12 @@
+---
+  - name: Create a port
+    os_port:
+      auth: "{{ credentials | default(omit) }}"
+      state: present
+      name: port1
+      admin_state_up: yes
+      network: admin-net
+      fixed_ips:
+        - ip_address: 10.0.0.101
+          # subnet_id: admin-sub
+      no_security_groups: no

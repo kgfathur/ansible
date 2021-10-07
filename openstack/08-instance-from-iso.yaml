@@ -1,11 +1,11 @@
-- name: Create bootable ISO volume
+- name: Create Image Builder Instance
   hosts: localhost
   vars_files:
       - "vars/credentials.yaml"
   tasks:
     - name: Create bootable ISO volume
       os_volume:
-        auth: "{{ credentials }}"
+        auth: "{{ credentials | default(omit) }}"
         state: present
         display_name: rhel-8.2-iso-bootable
         volume_type: premium
@@ -18,7 +18,7 @@
         #wait: yes
     - name: Create Secondary volume for Custom Image Builder
       os_volume:
-        auth: "{{ credentials }}"
+        auth: "{{ credentials | default(omit) }}"
         state: present
         display_name: rhel-8.2-iso-builder
         volume_type: premium
@@ -29,3 +29,19 @@
         availability_zone: nova
         display_description: Volume for Build Custom Image
         #wait: yes
+    - name: Create Builder instance 
+      os_server:
+        auth: "{{ credentials | default(omit) }}"
+        state: present
+        name: rhel-8.2-builder
+        #image: 
+        boot_volume: rhel-8.2-iso-bootable
+        volumes:
+          - rhel-8.2-iso-builder
+        timeout: 200
+        flavor: m1.medium
+        auto_ip: no
+        #network: admin-net
+        nics:
+          - net-name: admin-net
+          #- net-id: 34605f38-e52a-25d2-b6ec-754a13ffb723

@@ -1,8 +1,9 @@
 ---
   - name: List Task Template
     find:
-      paths: "{{ playbook_dir }}"
-      patterns: 08--*.yaml
+      paths: "{{ playbook_dir }}/tasks"
+      patterns: "02-0[2-4]-*"
+      use_regex: yes
     register: task_files
 
   - name: Setup Template for DELETE Action

@@ -1,0 +1,39 @@
+---
+  - name: Create Flavor
+    os_nova_flavor:
+      auth: "{{ credentials | default(omit) }}"
+      state: present
+      flavorid: "{{ item.name }}"
+      name: "{{ item.name }}"
+      is_public: yes
+      vcpus: "{{ item.vcpus }}"
+      ram: "{{ item.ram }}"
+      swap: "{{ item.swap }}"
+      disk: "{{ item.disk }}"
+      ephemeral: "{{ item.ephemeral }}"
+      # extra_specs: {}
+    loop:
+      - name: c01m007
+        vcpus: 1
+        ram: 768
+        swap: 0
+        disk: 0
+        ephemeral: 0
+      - name: c01m010
+        vcpus: 1
+        ram: 1024
+        swap: 0
+        disk: 0
+        ephemeral: 0
+      - name: c01m015
+        vcpus: 1
+        ram: 1536
+        swap: 0
+        disk: 0
+        ephemeral: 0
+      - name: c01m020
+        vcpus: 1
+        ram: 2048
+        swap: 0
+        disk: 0
+        ephemeral: 0

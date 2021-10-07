@@ -1,0 +1,9 @@
+- name: Sample Playbook
+  hosts: localhost
+  tasks:
+    - name: Using Find and Replace
+      include_tasks: "tasks/02-00-prepare-create.yaml"
+    # - name: Using Find and Replace
+    #   include_tasks: "tasks/02-00-prepare-create.yaml"
+    
+

@@ -5,10 +5,10 @@
     - "vars/config-data.yaml"
   tasks:
     - name: Create Public/Provider Network
-      include_tasks: "07--provider-network.yaml"
+      include_tasks: "tasks/01-00-provider-network.yaml"
 
     - name: Create Tenant Network
-      include_tasks: "07--tenant-network.yaml"
+      include_tasks: "tasks/01-01-tenant-network.yaml"
 
     - name: Create Tenant Router
-      include_tasks: "07--tenant-router.yaml"
+      include_tasks: "tasks/01-02-tenant-router.yaml"

@@ -1,0 +1,7 @@
+- name: Create some Flavors
+  hosts: localhost
+  vars_files:
+      - "vars/credentials.yaml"
+  tasks:
+    - name: Create Flavors
+      include_tasks: "tasks/00-flavor-create.yaml"
