@@ -1,0 +1,79 @@
+---
+# External Network
+external_net: public
+external_type: flat
+external_phy: datacentre
+external_seg: 0
+external_sub: public-sub
+
+# Tenant Network
+internal_net: admin-net
+internal_subnet: admin-sub
+
+# Application port to be used
+app_port: 80
+
+# VIP Address for our loadbalancer
+lb_vip: 172.25.250.150
+
+# Instance data
+ext_net:
+  - name: public
+    project: admin
+    provider_network_type: flat
+    provider_physical_network: datacentre
+
+int_net:
+  - name: admin-net
+  - name: new-net
+
+ext_sub:
+  - name: public-sub
+    network_name: public
+    cidr: 192.168.240.0/24
+    gateway_ip: 192.168.240.240
+    dns_nameservers: 192.168.240.241
+    allocation_pool_start: 192.168.240.101
+    allocation_pool_end: 192.168.240.200
+
+int_sub:
+  - name: admin-sub
+    network_name: admin-net
+    cidr: 10.0.0.0/24
+    gateway_ip: 10.0.0.1
+    dns_nameservers: 192.168.240.241
+    allocation_pool_start: 10.0.0.10
+    allocation_pool_end: 10.0.0.100
+  - name: new-sub
+    network_name: new-net
+    cidr: 10.0.1.0/24
+    gateway_ip: 10.0.1.1
+    dns_nameservers: 192.168.240.241
+    allocation_pool_start: ""
+    allocation_pool_end: "" 
+
+router_info:
+  - name: admin-router
+    network: public
+    external_fixed_ips:
+      - subnet: public-sub
+        ip: 192.168.240.150
+    interfaces:
+      - net: admin-net
+        subnet: admin-sub
+        portip: 10.0.0.1
+      - net: new-net
+        subnet: new-sub
+        portip: 10.0.1.1
+  - name: new-router
+    network: public
+    external_fixed_ips:
+      - subnet: public-sub
+        ip: 192.168.240.151
+    interfaces:
+      - net: admin-net
+        subnet: admin-sub
+        portip: 10.0.0.254
+      - net: new-net
+        subnet: new-sub
+        portip: 10.0.1.254

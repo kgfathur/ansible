@@ -1,0 +1,7 @@
+- name: Prepare RHEL Hosts
+  hosts: all
+  vars_files:
+      - "../credentials/rhel-subs.yaml"
+  tasks:
+    - name: Red Hat Subscription
+      include_tasks: "tasks/00-rhel-subsription.yaml"

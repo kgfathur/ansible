@@ -1,3 +1,5 @@
 .vscode
 ansible-errors.json
 credentials.yaml
+credentials/*
+!credentials/sample.yaml
